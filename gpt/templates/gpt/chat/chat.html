@@ -1,0 +1,61 @@
+{% extends 'gpt/chat/base_chat.html' %}
+{% block title %} Chat Bot {% endblock %}
+{% block content %}
+<div class="grid-container text-center vh-100">
+          <div class="bg-dark text-light grid-nav">
+              <div class="p-2 ">
+                  <p class="border border-light w-50 mx-auto p-1 rounded-3">
+                      <span><i class="bi bi-plus"></i></span> <span>New Chat</span>
+                  </p>
+              </div>
+              <div class="bg-dark"></div>
+              <div class="bg-dark text-light grid-nav-footer">
+                    <ul class="me-4">
+                        <li>
+                            <div class="p-2">
+                                <span class="rounded-1 letter bg-secondary fs-5 fw-bold p-2 text-uppercase">{{ user.username|first }}</span>
+                                <span>{{ user.last_name }} {{ user.first_name }}</span>
+                            </div>
+                        </li>
+                        <li><a class="text-decoration-none text-light" href="{% url 'logout' %}"><span class="me-2"><i class="bi bi-box-arrow-left"></i></span>Log Out</a></li>
+                    </ul>
+              </div>
+          </div>
+
+          <div class=" grid-chat">
+              <div>
+                  <h1 class="text-center"> GPT-CLONE</h1>
+              </div>
+                <div id="chat-container" class="h-100">
+                    <div id="chat-messages"></div>
+                </div>
+
+               <div class="item3 shadow-lg p-4">
+                   <form id="message-form" method="post" class="h-100 w-75 mx-auto">
+                       {% csrf_token %}
+                        <div class="rounded bg-secondary-subtle">
+                            <div class="form-floating w-100 btn-parent d-flex flex-row justify-content-star ">
+                                <textarea name="textarea" class="resize-none p-0 flex-grow-1 border-0 bg-transparent ms-2" rows="4" id="user-message" placeholder="Send a message....." onfocus="this.style.outline='none';"></textarea>
+
+                                <div class="fs-4 btn-child" style="width: 10rem; height: 4rem">
+                                <button type="submit" class="rounded-circle px-0 btn bg-dark " id="btn-submit" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"></path>
+                                    </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+               </div>
+          </div>
+</div>
+{% endblock %}
+{% block script %}
+    {% for chat in chats %}
+          {% if chat.user == request.user %}
+    sendingMessages({{chat.response}})
+     {% endif %}
+        {% endfor %}
+{% endblock %}
+

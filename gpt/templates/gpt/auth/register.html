@@ -1,0 +1,28 @@
+{% extends 'gpt/base.html' %}
+{% block title %} Register {% endblock %}
+{% block content %}
+    <div class="container mx-auto vh-100 d-flex flex-column justify-content-center col-lg-7">
+         {% if form.erros %}
+           <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <ul>
+                   {% for field, errors in forms.erros.items %}
+                   <li>{{ field }}: {{ errors }}</li>
+                   {% endfor %}
+               </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+           </div>
+            {% endif %}
+        <p class="text-uppercase fs-1 fw-bold text-center">Register</p>
+       <form method="post" action="">
+              {% csrf_token %}
+            {{ form.as_div }}
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-dark btn-block mb-4 mt-3">Register</button>
+
+              <!-- Register buttons -->
+              <div class="text-center">
+                <p>Already Have An Account|<a class="text-dark ms-1" href="{% url 'login' %}">Log In</a></p>
+              </div>
+            </form>
+    </div>
+{% endblock %}

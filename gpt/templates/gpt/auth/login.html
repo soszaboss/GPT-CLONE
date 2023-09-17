@@ -1,0 +1,18 @@
+{% extends 'gpt/base.html' %}
+{% block title %} Login {% endblock %}
+{% block content %}
+    <div class="container mx-auto vh-100 d-flex flex-column justify-content-center col-lg-5">
+            <p class="text-uppercase fs-1 fw-bold text-center ">Login</p>
+       <form method="post" action="">
+              {% csrf_token %}
+            {{ form.as_div }}
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-dark btn-block mb-4 mt-3">Log In</button>
+
+              <!-- Register buttons -->
+              <div class="text-center ">
+                <p>Not a member ?|<a class="text-dark ms-1" href="{% url 'register' %}">Register</a></p>
+              </div>
+            </form>
+    </div>
+{% endblock %}
